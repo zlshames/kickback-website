@@ -9,15 +9,20 @@ export const site = {
     'Kickback turns any Mac into a living-room TV box: a launcher of beautiful tiles for your apps and streaming sites, driven from your phone. No server, no account, end-to-end encrypted.',
   version: '0.1.0',
   minMacOS: 'macOS 14 Sonoma',
-  email: 'hello@getkickback.app',
 
-  // PLACEHOLDER links. Point these at the real files / store pages before launch.
+  // Downloads and store pages. Leave one as null until it exists: its buttons show grayed out,
+  // labeled "Coming soon", instead of linking nowhere.
   links: {
-    macDownload: '#', // e.g. https://getkickback.app/downloads/Kickback-0.1.0.dmg
-    macAppStore: '#',
-    iosRemote: '#',
-    androidRemote: '#',
-    buy: '#',
+    macDownload: null as string | null, // e.g. https://getkickback.app/downloads/Kickback-0.1.0.dmg
+    iosRemote: null as string | null,
+    androidRemote: null as string | null,
+  },
+
+  // Source code, and where to ask for help or report a problem. There's no support email.
+  github: {
+    mac: 'https://github.com/zlshames/kickback-for-mac',
+    companion: 'https://github.com/zlshames/kickback-companion',
+    issues: 'https://github.com/zlshames/kickback-for-mac/issues',
   },
 
   // The phone app, for the guest invite links (https://getkickback.app/join#…, see /join). These are
@@ -33,7 +38,7 @@ export const site = {
   },
 };
 
-// PLACEHOLDER pricing. Nothing in the app enforces these yet; change freely.
+// Nothing in the app enforces these yet; keep them in step with the license server.
 export const pricing = {
   currency: '$',
   trialDays: 3,
@@ -58,9 +63,9 @@ export const pricing = {
     {
       id: 'direct',
       name: 'Kickback',
-      price: 12,
+      price: 5,
       cadence: 'One-time purchase',
-      blurb: 'The complete Mac app, direct from us. Every feature, no subscription.',
+      blurb: 'The complete Mac app. Every feature, no subscription.',
       cta: { label: 'Download free trial', href: '/download' },
       featured: true,
       badge: 'Everything included',
@@ -74,42 +79,9 @@ export const pricing = {
         'Use on every Mac you own',
       ],
     },
-    {
-      id: 'mas',
-      name: 'App Store Edition',
-      price: 10,
-      cadence: 'One-time purchase',
-      blurb: 'A sandboxed build from the Mac App Store. Simpler to install, a little lighter on features.',
-      cta: { label: 'View on the App Store', href: '/download#app-store' },
-      featured: false,
-      features: [
-        'The full tvOS-style launcher',
-        'Remote, trackpad, keyboard and media keys',
-        'Scenes, sleep timer and window tools',
-        'Ask, Smart Clipboard and Organize Tiles',
-        'Family Sharing and App Store updates',
-      ],
-    },
   ],
 };
 
-// Direct vs App Store edition. Mirrors docs/APP_STORE.md in the main repo.
-export const editionRows: { feature: string; direct: boolean | string; mas: boolean | string; note?: string }[] = [
-  { feature: 'tvOS-style launcher, tiles and Top Shelf', direct: true, mas: true },
-  { feature: 'Phone remote, trackpad, keyboard, dictation', direct: true, mas: true },
-  { feature: 'Wi-Fi and Bluetooth LE, end-to-end encrypted', direct: true, mas: true },
-  { feature: 'Scenes, Shortcuts tiles, window tools', direct: true, mas: true },
-  { feature: 'Apple Intelligence: Ask, Smart Clipboard, Organize', direct: true, mas: true, note: 'macOS 26+ on Apple silicon' },
-  { feature: 'Game controller support', direct: true, mas: true },
-  { feature: 'Media keys (play, pause, next, previous)', direct: true, mas: true },
-  { feature: 'Now Playing: title, artwork and seeking', direct: true, mas: false },
-  { feature: 'Brightness control', direct: true, mas: false },
-  { feature: 'Night Shift toggle', direct: true, mas: false },
-  { feature: 'Dark Mode toggle', direct: true, mas: false },
-  { feature: 'Reuse browser tabs, tabs in the app switcher', direct: true, mas: false },
-  { feature: 'Sleep timer', direct: 'Pauses, then sleeps', mas: 'Sleeps display or Mac' },
-  { feature: 'Updates', direct: 'Direct download', mas: 'Mac App Store' },
-];
 
 export type Faq = { q: string; a: string };
 export const faqs: { group: string; items: Faq[] }[] = [
@@ -197,7 +169,7 @@ export const faqs: { group: string; items: Faq[] }[] = [
       },
       {
         q: 'How do I send a diagnostics report?',
-        a: `On the Mac, open Settings → About → Copy Diagnostics Report, look it over, and choose Copy. On the phone, choose ⋯ → Copy Diagnostics, or Copy Diagnostics on the Connect screen when it won't connect. A connected phone's report includes the Mac's. Then paste it into an email to ${site.email}. It holds versions, settings, permissions and the current session's log, with no names, titles, links or addresses. Kickback only copies it: it never sends it anywhere.`,
+        a: `On the Mac, open Settings → About → Copy Diagnostics Report, look it over, and choose Copy. On the phone, choose ⋯ → Copy Diagnostics, or Copy Diagnostics on the Connect screen when it won't connect. A connected phone's report includes the Mac's. Then open an issue in Kickback's GitHub repository and paste it in. Issues are public, so look the report over first. It holds versions, settings, permissions and the current session's log, with no names, titles, links or addresses. Kickback only copies it: it never sends it anywhere.`,
       },
       {
         q: 'How is the connection secured?',
@@ -217,12 +189,12 @@ export const faqs: { group: string; items: Faq[] }[] = [
         a: 'No. Kickback for Mac is a one-time purchase and the phone remote is free.',
       },
       {
-        q: 'What is the difference between the direct version and the App Store edition?',
-        a: 'The direct version has every feature. The App Store edition runs in Apple\'s sandbox, which rules out a handful of system-level features: Now Playing details and seeking, brightness, Night Shift, the Dark Mode toggle, and browser tab reuse. The pricing page has a full side-by-side table.',
+        q: 'Can I try before I buy?',
+        a: `Yes. The download includes a ${pricing.trialDays}-day free trial with every feature unlocked.`,
       },
       {
-        q: 'Can I try before I buy?',
-        a: 'Yes. The direct download includes a free trial with every feature unlocked.',
+        q: 'Can I get a refund?',
+        a: 'Yes. Ask within 14 days of buying and you get the full amount back, no questions asked. Reply to your receipt email to ask. The Terms of Sale have the details.',
       },
     ],
   },

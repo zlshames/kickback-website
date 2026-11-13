@@ -40,7 +40,7 @@ const schema = {
           <FaqList items={g.items} />
         </section>
       ))}
-      <p class="none" data-none hidden>Nothing matches that. Try another word, or <a href={`mailto:${site.email}`}>ask us directly</a>.</p>
+      <p class="none" data-none hidden>Nothing matches that. Try another word, or <a href={site.github.issues}>ask on GitHub</a>.</p>
     </div>
   </section>
 
@@ -48,9 +48,9 @@ const schema = {
     <div class="still card reveal">
       <div>
         <h2 class="h3">Still stuck?</h2>
-        <p class="muted">Write to us and a person will answer.</p>
+        <p class="muted">Open an issue on GitHub and a person will answer.</p>
       </div>
-      <a class="btn btn-ghost" href={`mailto:${site.email}`}><Icon name="mail" size={18} /> {site.email}</a>
+      <a class="btn btn-ghost" href={site.github.issues}><Icon name="github" size={18} /> Open an issue</a>
     </div>
   </section>
 </Base>

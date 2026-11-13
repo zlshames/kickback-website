@@ -1,0 +1,41 @@
+---
+// https://getkickback.app/remote: where the Mac's "Get the remote" QR code points, so the code never
+// has to change. A phone goes straight to its store; a desktop browser sees both buttons. Until a
+// store link is set, that store's button is grayed out and nothing redirects.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import StoreBadge from '../components/StoreBadge.astro';
+import { site } from '../data/site';
+---
+<Base title={`Get ${site.companion}`} description={`${site.companion}, the free remote for ${site.name}, for iPhone and Android.`}>
+  <section class="page-hero get">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap center" data-ios={site.links.iosRemote ?? ''} data-android={site.links.androidRemote ?? ''} data-stores>
+      <span class="kicker"><Icon name="phone" size={16} /> Free for iPhone and Android</span>
+      <h1 class="display">Get {site.companion}.</h1>
+      <p class="lede">The remote for {site.name}. Install it, open it, and your Mac appears in the list. Pair with the 6-digit code on the TV.</p>
+      <div class="btns">
+        <StoreBadge store="ios" />
+        <StoreBadge store="android" />
+      </div>
+      <p class="note"><a href="/download#setup">Setup guide</a></p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // On a phone with a store link set, skip this page and open the store.
+  const el = document.querySelector<HTMLElement>('[data-stores]');
+  const ua = navigator.userAgent;
+  const iOS = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  const target = iOS ? el?.dataset.ios : /Android/.test(ua) ? el?.dataset.android : '';
+  if (target) location.replace(target);
+</script>
+
+<style>
+  .get { min-height: 80vh; display: grid; place-items: center; }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 0.82rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 18px; }
+  .btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 34px; }
+  .note { margin-top: 26px; font-size: 0.92rem; }
+  .note a { color: var(--accent); }
+</style>

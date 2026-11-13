@@ -65,7 +65,7 @@ const actions = [
           </div>
           {rows.map((row, r) => (
             <section class="row-block">
-              <h3 class="row-name">{row.name}</h3>
+              <div class="row-name">{row.name}</div>
               <div class="row" data-row={r}>
                 {row.tiles.map((t) => (
                   <button

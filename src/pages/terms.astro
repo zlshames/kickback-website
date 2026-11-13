@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, pricing } from '../data/site';
+
+const direct = pricing.plans.find((p) => p.featured)!;
+const price = `${pricing.currency}${direct.price}`;
+const updated = 'November 13, 2026';
+---
+<Base title="Terms of Sale" description={`What you get when you buy ${site.name}, the free trial, and how refunds work.`}>
+  <section class="page-hero">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="eyebrow reveal">Terms of Sale</span>
+      <h1 class="display reveal">Buy once.<br /><span class="grad">Plainly explained.</span></h1>
+      <p class="lede reveal">What you get when you buy {site.name}, how the trial works, and how to get your money back. Last updated {updated}.</p>
+    </div>
+  </section>
+
+  <article class="wrap prose">
+    <section class="reveal">
+      <h2>What you're buying</h2>
+      <p>A purchase of {site.name} for Mac is a one-time payment of {price} (plus any sales tax or VAT shown at checkout) for a license to use the app. It is not a subscription, and nothing renews.</p>
+      <p>Your license key unlocks {site.name} on the Macs you personally own or use. Please don't share it or sell it.</p>
+      <p>{site.companion}, the phone remote, is free and needs no purchase.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>The free trial</h2>
+      <p>The download includes a {pricing.trialDays}-day trial with every feature unlocked. You don't need to enter payment details to start it. When the trial ends, buy a license to keep using {site.name}.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>Payment</h2>
+      <p>Checkout is run by our payment provider, which acts as the reseller and merchant of record. It takes your payment, charges any tax that applies, sends your receipt and license key, and is the name you'll see on your statement. We never see your card details.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>Updates</h2>
+      <p>We don't charge for updates. New versions are free for everyone with a license.</p>
+    </section>
+
+    <section class="reveal" id="refunds">
+      <h2>Refunds</h2>
+      <p>If {site.name} isn't right for you, ask for a refund within 14 days of buying and you'll get the full amount back. No questions asked.</p>
+      <p>To ask, reply to your receipt email, or use the support contact printed on it. The refund goes back to the way you paid, and your license key stops working.</p>
+      <p>This doesn't limit any rights you have under the consumer laws where you live.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>Other apps and websites</h2>
+      <p>{site.name} opens apps and websites that belong to other companies, such as streaming services. Each has its own terms and subscriptions, which {site.name} doesn't include. {site.name} is an independent product and isn't affiliated with or endorsed by Apple or any service it opens.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>No warranty</h2>
+      <p>We work hard to make {site.name} reliable, but it is provided as is, without warranties of any kind. To the extent the law allows, we aren't liable for indirect or consequential losses from using it, and our total liability is limited to what you paid for it.</p>
+    </section>
+
+    <section class="reveal">
+      <h2>Changes and questions</h2>
+      <p>If these terms change, we'll update this page and the date at the top. A change never takes away a license you already bought.</p>
+      <p>For anything else, open an issue on <a href={site.github.issues}>GitHub</a>.</p>
+    </section>
+  </article>
+</Base>

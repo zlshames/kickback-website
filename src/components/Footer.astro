@@ -4,9 +4,9 @@ import appIcon from '../assets/app-icon.png';
 import { Image } from 'astro:assets';
 const year = new Date().getFullYear();
 const cols = [
-  { title: 'Product', links: [['Features', '/features'], ['Pricing', '/pricing'], ['Download', '/download'], ['FAQ', '/faq']] },
-  { title: 'Remote', links: [['iPhone', '/download#remote'], ['Android', '/download#remote'], ['Setup guide', '/download#setup']] },
-  { title: 'Company', links: [['Privacy', '/privacy'], ['Contact', `mailto:${site.email}`]] },
+  { title: 'Product', links: [['Features', '/features'], ['Pricing', '/pricing'], ['Download', '/download'], ['FAQ', '/faq'], ['Source code', site.github.mac]] },
+  { title: 'Remote', links: [['iPhone and Android', '/remote'], ['Setup guide', '/download#setup'], ['Source code', site.github.companion]] },
+  { title: 'Help', links: [['Report a problem', site.github.issues], ['Privacy', '/privacy'], ['Terms of Sale', '/terms'], ['Refunds', '/terms#refunds']] },
 ];
 ---
 <footer class="footer">

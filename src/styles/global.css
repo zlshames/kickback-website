@@ -14,7 +14,7 @@
   --line-2: rgba(255, 255, 255, 0.16);
   --text: #f3f4f8;
   --muted: #9ba1b0;
-  --faint: #6b7182;
+  --faint: #7d8394;
   --accent: #7ea8ff;
   --accent-2: #a67bff;
   --good: #30d158;
@@ -109,6 +109,15 @@ ul, ol { padding: 0; list-style: none; }
 .btn-ghost { background: var(--surface); border: 1px solid var(--line); color: var(--text); backdrop-filter: blur(12px); }
 .btn-ghost:hover { background: var(--surface-2); border-color: var(--line-2); transform: translateY(-2px); }
 .btn-sm { height: 38px; padding: 0 16px; font-size: 0.9rem; }
+/* A download or store link that doesn't exist yet (LinkButton with no href). */
+.btn.is-disabled { opacity: 0.4; filter: grayscale(1); cursor: not-allowed; box-shadow: none; }
+.btn.is-disabled:hover, .btn.is-disabled:active { transform: none; box-shadow: none; }
+.btn-ghost.is-disabled:hover { background: var(--surface); border-color: var(--line); }
+/* App Store and Google Play buttons (StoreBadge). */
+.store { height: 56px; padding: 0 20px 0 16px; gap: 11px; text-align: left; }
+.store .label { display: grid; line-height: 1.1; font-size: 1.05rem; }
+.store small { font-size: 0.66rem; font-weight: 500; color: var(--muted); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ---------- Surfaces ---------- */
 .card {
@@ -198,3 +207,14 @@ ul, ol { padding: 0; list-style: none; }
   content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.06; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+/* ---------- Long-form text (privacy, terms) ---------- */
+.prose { max-width: 760px; margin-top: clamp(64px, 9vw, 110px); display: grid; gap: 48px; }
+.prose h2 { font-size: 1.55rem; letter-spacing: -0.025em; margin-bottom: 14px; }
+.prose p, .prose li { color: #c3c7d3; font-size: 1.05rem; line-height: 1.65; }
+.prose p + p { margin-top: 14px; }
+.prose ul { display: grid; gap: 12px; }
+.prose li { padding-left: 22px; position: relative; }
+.prose li::before { content: ''; position: absolute; left: 2px; top: 0.72em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.prose b { color: #fff; font-weight: 620; }
+.prose a { color: var(--accent); }

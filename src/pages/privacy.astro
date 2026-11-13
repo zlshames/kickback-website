@@ -62,7 +62,7 @@ const points = [
     </section>
     <section class="reveal">
       <h2>Diagnostics reports</h2>
-      <p>When you ask for help, {site.name} can copy a diagnostics report: versions, settings, permission states, counts and the current session's log, with names, titles, links and addresses left out. It goes to your clipboard and nowhere else. You decide whether to paste it into an email.</p>
+      <p>When you ask for help, {site.name} can copy a diagnostics report: versions, settings, permission states, counts and the current session's log, with names, titles, links and addresses left out. It goes to your clipboard and nowhere else. You decide whether to share it. GitHub issues are public, so look a report over before you post it in one.</p>
     </section>
     <section class="reveal">
       <h2>Analytics and tracking</h2>
@@ -70,7 +70,7 @@ const points = [
     </section>
     <section class="reveal">
       <h2>Questions</h2>
-      <p>Write to <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <p>Open an issue on <a href={site.github.issues}>GitHub</a>.</p>
     </section>
   </article>
 </Base>
@@ -83,13 +83,4 @@ const points = [
   @media (max-width: 980px) { .points { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 560px) { .points { grid-template-columns: 1fr; } }
 
-  .prose { max-width: 760px; margin-top: clamp(64px, 9vw, 110px); display: grid; gap: 48px; }
-  .prose h2 { font-size: 1.55rem; letter-spacing: -0.025em; margin-bottom: 14px; }
-  .prose p, .prose li { color: #c3c7d3; font-size: 1.05rem; line-height: 1.65; }
-  .prose p + p { margin-top: 14px; }
-  .prose ul { display: grid; gap: 12px; }
-  .prose li { padding-left: 22px; position: relative; }
-  .prose li::before { content: ''; position: absolute; left: 2px; top: 0.72em; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
-  .prose b { color: #fff; font-weight: 620; }
-  .prose a { color: var(--accent); }
 </style>

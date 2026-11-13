@@ -8,7 +8,7 @@ import macSettings from '../assets/shots/mac-settings.png';
 import pControls from '../assets/shots/p-controls.png';
 import pApps from '../assets/shots/p-apps.png';
 
-type F = { icon: string; title: string; text: string; tag?: string };
+type F = { icon: string; title: string; text: string };
 const groups: { id: string; name: string; title: string; intro: string; items: F[] }[] = [
   {
     id: 'launcher', name: 'Launcher', title: 'A home screen for the big screen',
@@ -19,8 +19,8 @@ const groups: { id: string; name: string; title: string; intro: string; items: F
       { icon: 'tv', title: 'Top Shelf', text: 'The tile in focus gets a large title and a soft wash of its colors across the top of the screen.' },
       { icon: 'expand', title: 'Dedicated TV Mode', text: 'Launch at login, stay full screen, make launched apps full screen too, and keep the display awake.' },
       { icon: 'link', title: 'Open links in apps', text: 'Links for Spotify, Apple Music, Apple TV, Podcasts, Maps, Zoom, Slack, Discord and more open in the Mac app when it is installed. You choose app or browser per service.' },
-      { icon: 'tabs', title: 'Reuse browser tabs', text: 'A link switches to the tab that already shows it instead of opening a duplicate. Works with Safari, Chrome, Brave, Edge and Vivaldi.', tag: 'Direct' },
-      { icon: 'window', title: 'Its own browser window', text: 'By default Kickback keeps a browser window of its own, so your other windows are never switched or navigated.', tag: 'Direct' },
+      { icon: 'tabs', title: 'Reuse browser tabs', text: 'A link switches to the tab that already shows it instead of opening a duplicate. Works with Safari, Chrome, Brave, Edge and Vivaldi.' },
+      { icon: 'window', title: 'Its own browser window', text: 'By default Kickback keeps a browser window of its own, so your other windows are never switched or navigated.' },
       { icon: 'moon', title: 'Screensaver', text: 'Fades in after a delay you choose, so a paused evening does not burn in.' },
     ],
   },
@@ -43,7 +43,7 @@ const groups: { id: string; name: string; title: string; intro: string; items: F
     id: 'controls', name: 'Controls', title: 'A control center for the couch',
     intro: 'Everything you would otherwise get up for, on one tab.',
     items: [
-      { icon: 'music', title: 'Now Playing', text: 'Artwork, title and artist, a scrubber, ±10 seconds and transport for whatever the Mac is playing.', tag: 'Direct' },
+      { icon: 'music', title: 'Now Playing', text: 'Artwork, title and artist, a scrubber, ±10 seconds and transport for whatever the Mac is playing.' },
       { icon: 'clapper', title: 'Scenes', text: 'Movie Night, Bedtime and Back to Work are included. Build your own from controls, tiles, links, media keys, window moves, waits and Shortcuts.' },
       { icon: 'timer', title: 'Sleep timer', text: '15 minutes to two hours, or the end of the current track. Then pause, turn off the display, or sleep the Mac, with a warning a minute before.' },
       { icon: 'sun', title: 'System toggles', text: 'Do Not Disturb, Dark Mode, Night Shift, Keep Awake, Full Screen and Mute, with sliders for volume and brightness.' },
@@ -127,7 +127,7 @@ const groups: { id: string; name: string; title: string; intro: string; items: F
             {g.items.map((f, i) => (
               <article class="f reveal" style={`--d:${(i % 3) * 60}ms`}>
                 <span class="ic"><Icon name={f.icon} size={20} /></span>
-                <h3>{f.title}{f.tag && <em title="In the direct download. Not in the App Store edition.">{f.tag}</em>}</h3>
+                <h3>{f.title}</h3>
                 <p>{f.text}</p>
               </article>
             ))}
@@ -140,7 +140,6 @@ const groups: { id: string; name: string; title: string; intro: string; items: F
           )}
         </section>
       ))}
-      <p class="foot muted"><em class="tagx">Direct</em> marks features in the direct download that the sandboxed App Store edition leaves out. <a href="/pricing">Compare editions</a>.</p>
     </div>
   </div>
 

@@ -10,6 +10,7 @@
 // `location.hash`. No analytics, no third-party requests.
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import StoreBadge from '../components/StoreBadge.astro';
 import { site } from '../data/site';
 ---
 <Base title="Join as a Guest" description={`Open a ${site.name} invite in ${site.companion}.`} noindex>
@@ -24,8 +25,8 @@ import { site } from '../data/site';
         <li>
           <strong>Get the app</strong>
           <div class="btns">
-            <a class="btn btn-ghost store" href={site.links.iosRemote}><Icon name="apple" size={20} /><span><small>Download on the</small>App Store</span></a>
-            <a class="btn btn-ghost store" href={site.links.androidRemote}><Icon name="android" size={20} /><span><small>Get it on</small>Google Play</span></a>
+            <StoreBadge store="ios" />
+            <StoreBadge store="android" />
           </div>
         </li>
         <li>

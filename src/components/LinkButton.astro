@@ -1,0 +1,13 @@
+---
+// A button for a download or store link that may not exist yet. With an href it's a normal link;
+// with null it renders grayed out and inert, labeled "Coming soon" for screen readers and on hover.
+interface Props { href: string | null; class?: string; id?: string }
+const { href, class: cls, id } = Astro.props;
+---
+{href ? (
+  <a class:list={['btn', cls]} id={id} href={href}><slot /></a>
+) : (
+  <span class:list={['btn', cls, 'is-disabled']} id={id} role="link" aria-disabled="true" title="Coming soon">
+    <slot /><span class="sr-only"> (coming soon)</span>
+  </span>
+)}

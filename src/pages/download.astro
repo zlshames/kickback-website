@@ -2,14 +2,17 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import LinkButton from '../components/LinkButton.astro';
+import StoreBadge from '../components/StoreBadge.astro';
 import { site, pricing } from '../data/site';
 import appIcon from '../assets/app-icon.png';
 import pRemote from '../assets/shots/p-remote.png';
 
+const direct = pricing.plans.find((p) => p.featured)!;
+
 const steps = [
-  { t: 'Open Kickback on your Mac', d: 'Drag it to Applications and launch it. Allow Bluetooth and Local Network when macOS asks, so remotes can find it.' },
-  { t: 'Turn on Accessibility', d: 'In System Settings → Privacy & Security → Accessibility, switch Kickback on. The trackpad, keyboard and media keys need it.' },
-  { t: 'Install the remote', d: 'Get Kickback Companion on your iPhone or Android phone and open it. Your Mac appears in the list.' },
+  { t: 'Open Kickback on your Mac', d: 'Drag it to Applications and open it. It walks you through the permissions it needs: Local Network and Bluetooth so remotes can find it, and Accessibility for the trackpad, keyboard and media keys.' },
+  { t: 'Install the remote', d: 'Scan the code Kickback shows with your phone, or get Kickback Companion from the App Store or Google Play. Open it and your Mac appears in the list.' },
   { t: 'Pair with the code', d: 'Tap your Mac, then type the 6-digit code it shows. That is the only time you will need it.' },
   { t: 'Add your tiles', d: 'Use Add App, Add Link and Add Shortcut on the launcher, or the Apps tab on your phone.' },
 ];
@@ -36,10 +39,9 @@ const reqs = [
       <h2 class="h2 small">{site.name} for Mac</h2>
       <p class="muted">Version {site.version} · {site.minMacOS} or later · Signed with Developer ID</p>
       <div class="btns">
-        <a class="btn btn-primary" href={site.links.macDownload}><Icon name="download" size={18} /> Download (.dmg)</a>
-        <a class="btn btn-ghost" id="app-store" href={site.links.macAppStore}><Icon name="apple" size={18} /> Mac App Store</a>
+        <LinkButton class="btn-primary" href={site.links.macDownload}><Icon name="download" size={18} /> Download (.dmg)</LinkButton>
       </div>
-      <p class="note">The direct download has every feature. The App Store edition is sandboxed and leaves a few out. <a href="/pricing">Compare</a></p>
+      <p class="note">{site.links.macDownload ? `Every feature free for ${pricing.trialDays} days, then ${pricing.currency}${direct.price} once.` : 'The download opens soon.'} <a href="/pricing">Pricing</a></p>
     </article>
 
     <article class="card dl remote reveal" id="remote" style="--d:90ms">
@@ -48,8 +50,8 @@ const reqs = [
         <h2 class="h2 small">{site.companion}</h2>
         <p class="muted">Free · iPhone and Android</p>
         <div class="btns">
-          <a class="btn btn-ghost store" href={site.links.iosRemote}><Icon name="apple" size={20} /><span><small>Download on the</small>App Store</span></a>
-          <a class="btn btn-ghost store" href={site.links.androidRemote}><Icon name="android" size={20} /><span><small>Get it on</small>Google Play</span></a>
+          <StoreBadge store="ios" />
+          <StoreBadge store="android" />
         </div>
       </div>
       <div class="phone"><div class="screen"><Image src={pRemote} alt="The Kickback Companion app showing its swipe pad and buttons." widths={[360, 600]} sizes="200px" /></div></div>
@@ -59,7 +61,7 @@ const reqs = [
   <section class="section" id="setup">
     <div class="wrap center">
       <span class="eyebrow reveal">Setup</span>
-      <h2 class="h2 reveal">Five steps, about two minutes.</h2>
+      <h2 class="h2 reveal">Four steps, about two minutes.</h2>
     </div>
     <ol class="wrap steps">
       {steps.map((s, i) => (
@@ -91,9 +93,6 @@ const reqs = [
   .kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 0.82rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
   .h2.small { font-size: clamp(1.7rem, 3vw, 2.3rem); }
   .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-  .store { height: 56px; padding: 0 20px 0 16px; gap: 11px; text-align: left; }
-  .store span { display: grid; line-height: 1.1; font-size: 1.05rem; }
-  .store small { font-size: 0.66rem; font-weight: 500; color: var(--muted); }
   .note { margin-top: auto; padding-top: 22px; font-size: 0.86rem; color: var(--faint); }
   .note a { color: var(--accent); }
   @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }

@@ -1,0 +1,16 @@
+---
+// App Store and Google Play buttons for Kickback Companion. Grayed out until the store link is set.
+import Icon from './Icon.astro';
+import LinkButton from './LinkButton.astro';
+import { site } from '../data/site';
+
+interface Props { store: 'ios' | 'android' }
+const { store } = Astro.props;
+const href = store === 'ios' ? site.links.iosRemote : site.links.androidRemote;
+const name = store === 'ios' ? 'App Store' : 'Google Play';
+const lead = href ? (store === 'ios' ? 'Download on the' : 'Get it on') : 'Coming soon to';
+---
+<LinkButton class="btn-ghost store" href={href}>
+  <Icon name={store === 'ios' ? 'apple' : 'android'} size={20} /><span class="label"><small>{lead}</small>{name}</span>
+</LinkButton>
+

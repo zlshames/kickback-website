@@ -293,7 +293,7 @@ const more = [
       </div>
       <div class="ask-visual reveal">
         <div class="ask-panel" data-ask>
-          <h4>Ask {site.name}</h4>
+          <div class="ask-title">Ask {site.name}</div>
           <div class="ask-field"><Icon name="sparkles" size={18} /><span data-ask-text></span><i class="caret"></i></div>
           <ul class="ask-actions" data-ask-actions></ul>
         </div>
@@ -339,7 +339,7 @@ const more = [
       <li class="card reveal">
         <span class="n">1</span>
         <h3 class="h3">Install {site.name} on your Mac</h3>
-        <p class="muted">Open it and allow Bluetooth, Local Network and Accessibility, so your phone can find it and send keys.</p>
+        <p class="muted">Open it, and it walks you through the permissions it needs so your phone can find it and send keys.</p>
         <div class="how-art"><span class="mini-tile" style="--a:#048ffe"></span><span class="mini-tile on" style="--a:#f80135"></span><span class="mini-tile" style="--a:#8936b4"></span></div>
       </li>
       <li class="card reveal" style="--d:90ms">
@@ -366,7 +366,7 @@ const more = [
         <p class="lede">No subscription. The Mac app is a one-time purchase with a {pricing.trialDays}-day free trial, and the remote is free on every phone in the house.</p>
         <div class="cta-row left">
           <a class="btn btn-primary" href="/download">Start free trial</a>
-          <a class="btn btn-ghost" href="/pricing">Compare editions</a>
+          <a class="btn btn-ghost" href="/pricing">See pricing</a>
         </div>
       </div>
       <div class="price-tag">
@@ -663,7 +663,7 @@ const more = [
     border: 1px solid rgba(255, 255, 255, 0.14); backdrop-filter: blur(30px);
     box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14);
   }
-  .ask-panel h4 { font-size: 1.6rem; letter-spacing: -0.03em; font-weight: 700; margin-bottom: 18px; }
+  .ask-title { font-size: 1.6rem; letter-spacing: -0.03em; font-weight: 700; margin-bottom: 18px; }
   .ask-field { display: flex; align-items: center; gap: 10px; background: #fff; color: #0a0b10; border-radius: 12px; padding: 12px 14px; font-weight: 560; min-height: 50px; font-size: 0.95rem; line-height: 1.3; }
   .ask-field :global(svg) { color: #8b5cf6; flex: none; }
   .caret { width: 2px; height: 1.2em; background: #3b82f6; margin-left: -8px; animation: blink 1s steps(2) infinite; }
