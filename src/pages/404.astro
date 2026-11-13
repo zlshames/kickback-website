@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Not found">
+  <section class="lost">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap center">
+      <div class="tile" aria-hidden="true">404</div>
+      <h1 class="h2">No signal.</h1>
+      <p class="lede">That page is not on any channel we know. Press Home to get back.</p>
+      <a class="btn btn-primary" href="/"><Icon name="tv" size={18} /> Home</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .lost { position: relative; min-height: 86vh; display: grid; place-items: center; padding: 140px 0 80px; }
+  .tile { width: min(320px, 70vw); aspect-ratio: 5 / 3; margin: 0 auto 40px; border-radius: 18px; display: grid; place-items: center; font-size: 4rem; font-weight: 750; letter-spacing: -0.05em; background: linear-gradient(135deg, #7ea8ff, #6d3fe0); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 40px 80px -20px rgba(110, 100, 255, 0.7); transform: perspective(900px) rotateX(8deg) rotateY(-10deg); }
+  .btn { margin-top: 30px; }
+</style>

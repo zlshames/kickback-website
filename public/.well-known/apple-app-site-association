@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["WPV275H8W7.app.getkickback.kickbackCompanion"],
+        "components": [
+          { "/": "/join", "comment": "Guest invites. The invite is in the fragment, which is never sent to this server." },
+          { "/": "/join/" }
+        ]
+      }
+    ]
+  }
+}

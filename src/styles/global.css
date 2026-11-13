@@ -1,0 +1,200 @@
+/* Kickback site: design tokens and shared primitives. Dark only, like the app. */
+@property --glow {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #7ea8ff;
+}
+
+:root {
+  --bg: #05060a;
+  --bg-2: #0a0c13;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-2: rgba(255, 255, 255, 0.075);
+  --line: rgba(255, 255, 255, 0.09);
+  --line-2: rgba(255, 255, 255, 0.16);
+  --text: #f3f4f8;
+  --muted: #9ba1b0;
+  --faint: #6b7182;
+  --accent: #7ea8ff;
+  --accent-2: #a67bff;
+  --good: #30d158;
+  --grad: linear-gradient(100deg, #8fd0ff 0%, #7ea8ff 38%, #b184ff 78%, #e0a3ff 100%);
+  --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.34, 1.4, 0.44, 1);
+  --page: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+}
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+::selection { background: rgba(126, 168, 255, 0.35); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+
+/* ---------- Layout ---------- */
+.wrap { width: min(100% - 2 * var(--gutter), var(--page)); margin-inline: auto; }
+.section { padding-block: clamp(72px, 11vw, 150px); position: relative; }
+.center { text-align: center; }
+
+/* ---------- Type ---------- */
+.display {
+  font-size: clamp(2.7rem, 7.2vw, 5.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.h2 {
+  font-size: clamp(2.1rem, 4.8vw, 3.9rem);
+  line-height: 1.03;
+  letter-spacing: -0.038em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); line-height: 1.2; letter-spacing: -0.022em; font-weight: 650; }
+.lede { font-size: clamp(1.08rem, 1.6vw, 1.32rem); line-height: 1.5; color: var(--muted); text-wrap: pretty; max-width: 62ch; }
+.center .lede { margin-inline: auto; }
+.h2 + .lede, .display + .lede { margin-top: 22px; }
+.muted { color: var(--muted); }
+.grad {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  /* keep descenders from being clipped by background-clip */
+  padding-bottom: 0.08em;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+.eyebrow::before { content: ''; width: 18px; height: 1px; background: currentColor; opacity: 0.7; }
+.center .eyebrow::after { content: ''; width: 18px; height: 1px; background: currentColor; opacity: 0.7; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  height: 50px; padding: 0 24px; border-radius: 999px;
+  font-size: 1rem; font-weight: 620; letter-spacing: -0.01em; white-space: nowrap;
+  transition: transform 0.35s var(--ease), background 0.25s, box-shadow 0.35s, border-color 0.25s;
+}
+.btn:active { transform: scale(0.97); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn-primary {
+  background: #fff; color: #07080c;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 10px 40px -10px rgba(126, 168, 255, 0.75);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px #fff, 0 18px 50px -10px rgba(140, 150, 255, 0.95); }
+.btn-ghost { background: var(--surface); border: 1px solid var(--line); color: var(--text); backdrop-filter: blur(12px); }
+.btn-ghost:hover { background: var(--surface-2); border-color: var(--line-2); transform: translateY(-2px); }
+.btn-sm { height: 38px; padding: 0 16px; font-size: 0.9rem; }
+
+/* ---------- Surfaces ---------- */
+.card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.025));
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  overflow: hidden;
+}
+.card::before {
+  /* hairline highlight along the top edge, like the app's glass panels */
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+  pointer-events: none;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--line);
+  font-size: 0.86rem; font-weight: 560; color: #d6d9e3; white-space: nowrap;
+}
+.chip svg { width: 15px; height: 15px; }
+.kbd {
+  display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 7px;
+  border-radius: 7px; background: rgba(255, 255, 255, 0.08); border: 1px solid var(--line-2);
+  border-bottom-width: 2px; font-family: var(--font); font-size: 0.78rem; font-weight: 600; color: #dfe2ea;
+}
+
+/* ---------- Device frames ---------- */
+.phone {
+  position: relative; aspect-ratio: 1206 / 2622;
+  border-radius: 15.5% / 7.2%;
+  background: linear-gradient(145deg, #3a3d47, #121318 30%, #0a0a0d 70%, #2b2d36);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    inset 0 0 0 1.5px rgba(0, 0, 0, 0.9),
+    0 50px 90px -30px rgba(0, 0, 0, 0.9),
+    0 30px 60px -30px rgba(100, 120, 255, 0.35);
+}
+.phone > .screen {
+  /* Inset from the phone's own box. Percentage padding would resolve against the
+     parent's width instead, which made the bezel grow with the surrounding card. */
+  position: absolute; inset: 1.1% 2.4%; overflow: hidden;
+  border-radius: 13.6% / 6.3%;
+  background: #07080c;
+}
+.phone > .screen > img { width: 100%; height: 100%; object-fit: cover; }
+.phone > .screen::after {
+  /* dynamic island */
+  content: ''; position: absolute; top: 1.35%; left: 50%; translate: -50% 0;
+  width: 30%; aspect-ratio: 3.3; border-radius: 999px; background: #000;
+}
+
+.display-frame {
+  position: relative;
+  border-radius: clamp(10px, 1.6vw, 22px);
+  padding: clamp(5px, 0.7vw, 10px);
+  background: linear-gradient(160deg, #2c2e36, #0c0d11 35%, #08090c 70%, #23252c);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 60px 120px -40px rgba(0, 0, 0, 0.95);
+}
+.display-frame > img, .display-frame > .screen { border-radius: clamp(6px, 1vw, 14px); width: 100%; display: block; }
+
+/* ---------- Scroll reveal ---------- */
+.reveal { opacity: 0; transform: translateY(28px) scale(0.985); filter: blur(6px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease), filter 0.9s var(--ease); transition-delay: var(--d, 0ms); }
+.reveal.in { opacity: 1; transform: none; filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* ---------- Page chrome shared by sub pages ---------- */
+.page-hero { padding-top: clamp(130px, 17vw, 200px); padding-bottom: clamp(40px, 6vw, 70px); text-align: center; position: relative; }
+.page-hero .lede { margin: 22px auto 0; }
+.aurora {
+  position: absolute; inset: 0; pointer-events: none; z-index: -1; overflow: hidden;
+}
+.aurora::before, .aurora::after {
+  content: ''; position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5;
+}
+.aurora::before { width: 60vw; height: 38vw; left: -10vw; top: -18vw; background: radial-gradient(closest-side, #3b5bdb, transparent); animation: drift 22s ease-in-out infinite alternate; }
+.aurora::after { width: 55vw; height: 36vw; right: -12vw; top: -14vw; background: radial-gradient(closest-side, #7c3aed, transparent); animation: drift 26s ease-in-out infinite alternate-reverse; }
+@keyframes drift { to { transform: translate3d(6vw, 4vw, 0) scale(1.15); } }
+
+.grain::after {
+  /* a little film grain keeps large dark gradients from banding */
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: 0.06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}

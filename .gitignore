@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+
+# Local developer notes and agent instructions, kept out of the public repo
+docs/
+CLAUDE.md
+AGENTS.md

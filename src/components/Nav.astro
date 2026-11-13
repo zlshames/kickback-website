@@ -1,0 +1,92 @@
+---
+import { site } from '../data/site';
+import Icon from './Icon.astro';
+import appIcon from '../assets/app-icon.png';
+import { Image } from 'astro:assets';
+
+const links = [
+  { href: '/features', label: 'Features' },
+  { href: '/pricing', label: 'Pricing' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/privacy', label: 'Privacy' },
+];
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="nav" data-nav>
+  <div class="bar">
+    <a class="brand" href="/" aria-label={`${site.name} home`}>
+      <Image src={appIcon} alt="" width={56} height={56} loading="eager" />
+      <span>{site.name}</span>
+    </a>
+    <nav class="links" aria-label="Main">
+      {links.map((l) => (
+        <a href={l.href} aria-current={path === l.href ? 'page' : undefined}>{l.label}</a>
+      ))}
+    </nav>
+    <a class="btn btn-primary btn-sm cta" href="/download">
+      <Icon name="apple" size={16} /> Download
+    </a>
+    <button class="burger" aria-label="Menu" aria-expanded="false" data-burger>
+      <span></span><span></span>
+    </button>
+  </div>
+  <div class="sheet" data-sheet>
+    {links.map((l) => <a href={l.href}>{l.label}</a>)}
+    <a href="/download">Download</a>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector<HTMLElement>('[data-nav]')!;
+  const burger = nav.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+</script>
+
+<style>
+  .nav { position: fixed; top: 14px; left: 0; right: 0; z-index: 50; display: grid; justify-items: center; padding-inline: 12px; pointer-events: none; }
+  .bar {
+    pointer-events: auto;
+    display: flex; align-items: center; gap: 6px;
+    height: 56px; padding: 0 9px 0 14px; border-radius: 999px;
+    border: 1px solid transparent;
+    transition: background 0.4s, border-color 0.4s, box-shadow 0.4s, backdrop-filter 0.4s;
+  }
+  .scrolled .bar, .open .bar {
+    background: rgba(14, 16, 24, 0.66);
+    border-color: var(--line);
+    backdrop-filter: blur(22px) saturate(1.6);
+    -webkit-backdrop-filter: blur(22px) saturate(1.6);
+    box-shadow: 0 14px 44px -14px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  }
+  .brand { display: flex; align-items: center; gap: 9px; font-weight: 700; letter-spacing: -0.03em; font-size: 1.08rem; margin-right: 14px; }
+  .brand img { width: 30px; height: 30px; }
+  .links { display: flex; gap: 2px; margin-right: 10px; }
+  .links a { padding: 8px 14px; border-radius: 999px; font-size: 0.93rem; font-weight: 540; color: #c3c7d3; transition: color 0.2s, background 0.2s; }
+  .links a:hover { color: #fff; background: rgba(255, 255, 255, 0.07); }
+  .links a[aria-current='page'] { color: #fff; background: rgba(255, 255, 255, 0.1); }
+  .burger { display: none; width: 40px; height: 40px; border-radius: 50%; position: relative; }
+  .burger span { position: absolute; left: 11px; right: 11px; height: 1.8px; background: #fff; border-radius: 2px; transition: transform 0.3s var(--ease), top 0.3s var(--ease); }
+  .burger span:first-child { top: 15px; }
+  .burger span:last-child { top: 23px; }
+  .open .burger span:first-child { top: 19px; transform: rotate(45deg); }
+  .open .burger span:last-child { top: 19px; transform: rotate(-45deg); }
+  .sheet {
+    pointer-events: auto; display: none; margin-top: 8px; width: min(100%, 420px);
+    padding: 10px; border-radius: 26px; background: rgba(14, 16, 24, 0.86); border: 1px solid var(--line);
+    backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  }
+  .sheet a { display: block; padding: 13px 16px; border-radius: 16px; font-weight: 600; font-size: 1.05rem; }
+  .sheet a:hover { background: rgba(255, 255, 255, 0.07); }
+  @media (max-width: 720px) {
+    .bar { width: 100%; justify-content: space-between; }
+    .links, .cta { display: none; }
+    .burger { display: block; }
+    .open .sheet { display: block; }
+  }
+</style>

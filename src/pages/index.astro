@@ -1,0 +1,729 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import TVDemo from '../components/TVDemo.astro';
+import FaqList from '../components/FaqList.astro';
+import { site, pricing, faqs } from '../data/site';
+
+import macHome from '../assets/shots/mac-home-music.png';
+import macHomeTv from '../assets/shots/mac-home-tv.png';
+import macAsk from '../assets/shots/mac-ask.png';
+import macSettings from '../assets/shots/mac-settings.png';
+import pRemote from '../assets/shots/p-remote.png';
+import pApps from '../assets/shots/p-apps.png';
+import pControls from '../assets/shots/p-controls.png';
+import pAsk from '../assets/shots/p-ask.png';
+import safari from '../assets/tiles/safari.png';
+import music from '../assets/tiles/music.png';
+import youtube from '../assets/tiles/youtube.png';
+import twitch from '../assets/tiles/twitch.png';
+import tvIcon from '../assets/tiles/tv.png';
+import podcasts from '../assets/tiles/podcasts.png';
+
+const direct = pricing.plans.find((p) => p.featured)!;
+const topFaqs = [faqs[0].items[0], faqs[0].items[2], faqs[1].items[0], faqs[3].items[0], faqs[4].items[0]];
+
+const shots = [
+  { id: 'home', label: 'Home', img: macHome, alt: 'The Kickback launcher: rows of large tiles for Safari, TV, Music, Photos and Podcasts, with Music in focus and a red glow across the top of the screen.' },
+  { id: 'ask', label: 'Ask', img: macAsk, alt: 'The Ask Kickback panel over a blurred launcher, with suggestions such as “Open YouTube and dim the screen”.' },
+  { id: 'settings', label: 'Settings', img: macSettings, alt: 'Kickback Settings: Full Screen, Start in Full Screen, Dedicated TV Mode, Display and Screensaver.' },
+];
+
+const scenes = [
+  { id: 'movie', name: 'Movie Night', icon: 'clapper', color: '#5e5ce6', b: 0.35, warm: 0, steps: ['Do Not Disturb on', 'Brightness to 35%', 'Volume to 60%', 'Keep Awake on', 'Full screen'] },
+  { id: 'bed', name: 'Bedtime', icon: 'bed', color: '#ff9f0a', b: 0.2, warm: 1, steps: ['Night Shift on', 'Brightness to 20%', 'Volume to 30%', 'Sleep timer: 30 min'] },
+  { id: 'work', name: 'Back to Work', icon: 'briefcase', color: '#30d158', b: 0.8, warm: 0, steps: ['Do Not Disturb off', 'Keep Awake off', 'Leave full screen', 'Brightness to 80%'] },
+];
+
+const profiles = [
+  { app: 'YouTube', icon: youtube, fav: true, hint: 'Select plays and pauses. Left and right seek.', keys: ['Play/Pause', '−10 s', '+10 s', 'Full Screen', 'Captions'] },
+  { app: 'Music', icon: music, fav: false, hint: 'Left and right change track.', keys: ['Play/Pause', 'Previous', 'Next', 'Volume'] },
+  { app: 'Safari', icon: safari, fav: false, hint: 'A browser remote, with an address bar.', keys: ['Back', 'Forward', 'Reload', 'Tabs', 'Zoom'] },
+];
+
+const more = [
+  ['zap', 'Wake on LAN'], ['window', 'Window snapping'], ['speaker', 'Audio output switching'], ['clipboard', 'Clipboard sync'],
+  ['layers', 'Shortcuts as tiles'], ['share', 'Share to TV'], ['mic', 'Dictation'], ['lock', 'Lock-screen controls'], ['pointer', 'Trackpad mode'], ['keyboard', 'Live keyboard'],
+];
+---
+<Base>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap center">
+      <a class="announce reveal" href="/download">
+        <b>New</b> Version {site.version} for {site.minMacOS} and later <Icon name="arrow-right" size={14} />
+      </a>
+      <h1 class="display reveal" style="--d:60ms">Your Mac,<br /><span class="grad">made for the couch.</span></h1>
+      <p class="lede reveal" style="--d:120ms">
+        {site.name} turns any Mac into a living-room TV box: a home screen of beautiful tiles for your apps and streaming sites, and a remote that is already in your pocket.
+      </p>
+      <div class="cta-row reveal" style="--d:180ms">
+        <a class="btn btn-primary" href="/download"><Icon name="apple" size={18} /> Download for Mac</a>
+        <a class="btn btn-ghost" href="#tour">See what it does <Icon name="chevron-down" size={16} /></a>
+      </div>
+      <p class="fine reveal" style="--d:220ms">Free remote for iPhone and Android · No account · No server</p>
+    </div>
+
+    <div class="wrap demo reveal" style="--d:260ms">
+      <TVDemo />
+      <p class="try">
+        <span class="live"></span> This one is live.
+        <span class="try-mouse">Swipe the remote, click a tile, or hover and use
+        <span class="kbd">←</span><span class="kbd">↑</span><span class="kbd">↓</span><span class="kbd">→</span> and <span class="kbd">Return</span>.</span>
+        <span class="try-touch">Swipe the remote, or tap a tile twice to open it.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FACTS STRIP ============ -->
+  <section class="facts wrap" aria-label="At a glance">
+    <div class="reveal"><strong>0</strong><span>servers between your phone and your Mac</span></div>
+    <div class="reveal" style="--d:70ms"><strong>6</strong><span>digits to pair. No account, ever</span></div>
+    <div class="reveal" style="--d:140ms"><strong>2</strong><span>ways to connect: Wi-Fi and Bluetooth LE</span></div>
+    <div class="reveal" style="--d:210ms"><strong>1</strong><span>payment. The remote is free</span></div>
+  </section>
+
+  <!-- ============ LAUNCHER ============ -->
+  <section class="section" id="tour">
+    <div class="wrap center">
+      <span class="eyebrow reveal">The launcher</span>
+      <h2 class="h2 reveal">A home screen worth<br />sitting back for.</h2>
+      <p class="lede reveal">
+        Apps, websites and Shortcuts become big, focusable tiles you can read from across the room. Artwork and colors are picked up automatically, and the tile in focus lifts, tilts and catches the light.
+      </p>
+    </div>
+    <div class="wrap showcase reveal">
+      <div class="shot-tabs" role="tablist" aria-label="Screenshots">
+        {shots.map((s, i) => (
+          <button role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-shot-tab={s.id}>{s.label}</button>
+        ))}
+      </div>
+      <div class="display-frame shots" data-shots>
+        {shots.map((s, i) => (
+          <Image
+            src={s.img} alt={s.alt} class:list={[{ on: i === 0 }]} data-shot={s.id}
+            widths={[900, 1500, 2400]} sizes="(max-width: 1180px) 94vw, 1140px" loading={i === 0 ? 'eager' : 'lazy'} quality={82}
+          />
+        ))}
+      </div>
+      <p class="caption">Real screenshots of {site.name} {site.version} on macOS.</p>
+    </div>
+    <div class="wrap trio">
+      <div class="reveal">
+        <Icon name="grid" size={22} />
+        <h3 class="h3">Tiles for everything</h3>
+        <p class="muted">Mac apps, any web link, and your Shortcuts. Group them into rows, reorder them, and give any tile custom artwork.</p>
+      </div>
+      <div class="reveal" style="--d:80ms">
+        <Icon name="expand" size={22} />
+        <h3 class="h3">Dedicated TV Mode</h3>
+        <p class="muted">For the Mac mini behind the TV: launch at login, stay full screen, open apps full screen, and keep the display awake.</p>
+      </div>
+      <div class="reveal" style="--d:160ms">
+        <Icon name="tabs" size={22} />
+        <h3 class="h3">Links that behave</h3>
+        <p class="muted">Links open in the service's own Mac app when you have it. In the browser, {site.name} reuses the tab that is already open instead of piling up new ones.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REMOTE ============ -->
+  <section class="section remote-sec">
+    <div class="wrap split">
+      <div class="copy">
+        <span class="eyebrow reveal">The remote</span>
+        <h2 class="h2 reveal">Already in<br />your pocket.</h2>
+        <p class="lede reveal">
+          The free remote for iPhone and Android finds your Mac on its own. Swipe to move, tap to select, and reach for a trackpad or keyboard when a web page needs one.
+        </p>
+        <ul class="ticks">
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Swipe pad or D-pad</b>, with haptics on every press</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Trackpad and live keyboard</b>: the keyboard appears when a text field does</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Dictation</b>: hold the mic, speak, let go</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Your tiles on your phone</b>: launch, add, reorder and remove</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Volume buttons and lock screen</b> control the Mac too</span></li>
+        </ul>
+      </div>
+      <div class="phones reveal" aria-label="Screenshots of the remote app">
+        <div class="phone p-left"><div class="screen"><Image src={pApps} alt="The remote's Apps tab: a grid of the Mac's tiles, including Safari, TV, Music and Photos." widths={[360, 600]} sizes="260px" /></div></div>
+        <div class="phone p-mid"><div class="screen"><Image src={pRemote} alt="The remote's main tab: a large swipe pad above Back, Home, Keyboard and Hold to talk buttons and media keys." widths={[420, 720]} sizes="300px" /></div></div>
+        <div class="phone p-right"><div class="screen"><Image src={pControls} alt="The remote's Controls tab: scenes, Now Playing, Do Not Disturb, brightness and volume sliders, and audio output." widths={[360, 600]} sizes="260px" /></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BENTO ============ -->
+  <section class="section">
+    <div class="wrap center">
+      <span class="eyebrow reveal">Everything else</span>
+      <h2 class="h2 reveal">It does the fiddly parts,<br />so you stay on the sofa.</h2>
+    </div>
+    <div class="wrap bento">
+      <!-- per-app remote -->
+      <article class="card b-profile reveal" data-profiles>
+        <div class="b-copy">
+          <h3 class="h3">A remote that knows what's on</h3>
+          <p class="muted">The remote reshapes itself for whatever is in front on the Mac: video sites and players, music apps, browsers, or any other app.</p>
+        </div>
+        <div class="profile-demo" aria-hidden="true">
+          {profiles.map((p, i) => (
+            <div class:list={['profile', { on: i === 0 }]} data-prof-card>
+              <div class="p-app"><img src={p.icon.src} alt="" class:list={[{ fav: p.fav }]} /><div><b>{p.app}</b><span>{p.hint}</span></div></div>
+              <div class="p-keys">{p.keys.map((k) => <span>{k}</span>)}</div>
+            </div>
+          ))}
+          <div class="p-dots">{profiles.map((_, i) => <i class:list={[{ on: i === 0 }]} data-profile-dot></i>)}</div>
+        </div>
+      </article>
+
+      <!-- scenes -->
+      <article class="card b-scenes reveal" data-scenes style="--d:80ms">
+        <div class="b-copy">
+          <h3 class="h3">Scenes: one tap, many steps</h3>
+          <p class="muted">Try one. Scenes can set any control, open a tile, run a Shortcut or start the sleep timer.</p>
+        </div>
+        <div class="scene-btns">
+          {scenes.map((s) => (
+            <button data-scene={s.id} data-b={s.b} data-warm={s.warm} style={`--sc:${s.color}`}>
+              <span><Icon name={s.icon} size={16} /></span>{s.name}
+            </button>
+          ))}
+        </div>
+        <div class="scene-stage">
+          <div class="mini-tv" data-mini>
+            <Image src={macHomeTv} alt="" widths={[520]} sizes="260px" />
+            <i class="warm"></i>
+          </div>
+          {scenes.map((s) => (
+            <ol class="steps" data-steps={s.id} hidden>
+              {s.steps.map((st) => <li><Icon name="check" size={13} /> {st}</li>)}
+            </ol>
+          ))}
+          <p class="steps-idle" data-steps-idle>Pick a scene to run it here.</p>
+        </div>
+      </article>
+
+      <!-- now playing -->
+      <article class="card b-np reveal">
+        <div class="np">
+          <div class="np-art"><Icon name="music" size={26} /></div>
+          <div class="np-meta"><b>Night Drive</b><span>Coastal FM · Music</span></div>
+          <div class="np-bar"><i></i></div>
+          <div class="np-time"><span>1:12</span><span>−2:41</span></div>
+          <div class="np-ctl"><Icon name="skip-back" size={18} /><span class="np-play"><Icon name="pause" size={18} /></span><Icon name="skip-fwd" size={18} /></div>
+        </div>
+        <div class="b-copy">
+          <h3 class="h3">Now Playing</h3>
+          <p class="muted">Artwork, a scrubber and transport for whatever the Mac is playing: Music, Spotify, Podcasts or a browser tab.</p>
+        </div>
+      </article>
+
+      <!-- switcher -->
+      <article class="card b-switch reveal" style="--d:80ms">
+        <div class="sw-grid" aria-hidden="true">
+          <div><Icon name="tv" size={26} /><b>{site.name}</b><span>Home</span></div>
+          <div><img src={youtube.src} alt="" class="fav" /><b>YouTube</b><span>in Safari</span></div>
+          <div><img src={tvIcon.src} alt="" /><b>TV</b></div>
+          <div><img src={twitch.src} alt="" class="fav" /><b>Twitch</b><span>in Safari</span></div>
+        </div>
+        <div class="b-copy">
+          <h3 class="h3">Switch apps and tabs</h3>
+          <p class="muted">Double-press Home for a grid of running apps and open browser tabs. Tap to switch, hold to quit or close.</p>
+        </div>
+      </article>
+
+      <!-- sleep timer -->
+      <article class="card b-sleep reveal" style="--d:160ms">
+        <div class="ring" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" /><circle class="prog" cx="60" cy="60" r="52" /></svg>
+          <div><b>29:58</b><span>then sleep</span></div>
+        </div>
+        <div class="b-copy">
+          <h3 class="h3">Sleep timer</h3>
+          <p class="muted">15 minutes to two hours, or the end of this track. Then it pauses, and can sleep the display or the Mac.</p>
+        </div>
+      </article>
+
+      <!-- controller -->
+      <article class="card b-pad reveal">
+        <div class="b-copy">
+          <h3 class="h3">Game controllers welcome</h3>
+          <p class="muted">PlayStation, Xbox and MFi controllers drive the launcher. In a game, only the Home button belongs to {site.name}.</p>
+        </div>
+        <dl class="map">
+          <div><dt>D-pad / stick</dt><dd>Navigate</dd></div>
+          <div><dt>A</dt><dd>Select</dd></div>
+          <div><dt>B</dt><dd>Back</dd></div>
+          <div><dt>X</dt><dd>Play/Pause</dd></div>
+          <div><dt>L1 / R1</dt><dd>Previous / Next</dd></div>
+          <div><dt>Menu</dt><dd>Tile options</dd></div>
+        </dl>
+      </article>
+
+      <!-- more -->
+      <article class="card b-more reveal" style="--d:80ms">
+        <h3 class="h3">And a long tail of thoughtful extras</h3>
+        <div class="more-chips">
+          {more.map(([icon, label]) => <span class="chip"><Icon name={icon} size={15} /> {label}</span>)}
+        </div>
+        <a class="more-link" href="/features">See every feature <Icon name="arrow-right" size={16} /></a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ ASK ============ -->
+  <section class="section ask-sec">
+    <div class="ask-glow" aria-hidden="true"></div>
+    <div class="wrap split rev">
+      <div class="copy">
+        <span class="eyebrow reveal"><Icon name="sparkles" size={14} /> Apple Intelligence</span>
+        <h2 class="h2 reveal">Just <span class="grad">ask.</span></h2>
+        <p class="lede reveal">
+          Say what you want in plain words. {site.name} turns it into its own real actions, and checks every name against what is actually on your Mac, so it cannot invent anything.
+        </p>
+        <ul class="ticks">
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Private by design.</b> It all runs on the Mac, so Android phones get it too.</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Describe a scene</b> and get a name, icon and steps to review.</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Smart Clipboard</b> turns a pasted link, address or tracking number into the next step on the TV.</span></li>
+          <li class="reveal"><Icon name="check" size={18} /> <span><b>Organize Tiles</b> suggests clean names and tidy rows. Nothing changes until you apply it.</span></li>
+        </ul>
+        <p class="req reveal">Needs macOS 26 or later on Apple silicon with Apple Intelligence on. Everything else runs on Sonoma.</p>
+      </div>
+      <div class="ask-visual reveal">
+        <div class="ask-panel" data-ask>
+          <h4>Ask {site.name}</h4>
+          <div class="ask-field"><Icon name="sparkles" size={18} /><span data-ask-text></span><i class="caret"></i></div>
+          <ul class="ask-actions" data-ask-actions></ul>
+        </div>
+        <div class="phone ask-phone"><div class="screen"><Image src={pAsk} alt="The Ask sheet on the phone remote, with a text field, a microphone button and example requests." widths={[360, 600]} sizes="230px" /></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRIVACY ============ -->
+  <section class="section">
+    <div class="wrap center">
+      <span class="eyebrow reveal">Private by architecture</span>
+      <h2 class="h2 reveal">No cloud. No account.<br />Nothing in between.</h2>
+      <p class="lede reveal">Your phone talks straight to your Mac over your own network or Bluetooth. After a 6-digit pairing code, every message is end-to-end encrypted with keys only those two devices hold.</p>
+    </div>
+    <div class="wrap">
+      <div class="link-diagram card reveal">
+        <div class="node"><span><Icon name="phone" size={30} /></span><b>Your phone</b><small>iPhone or Android</small></div>
+        <div class="beam" aria-hidden="true">
+          <i></i><i></i><i></i>
+          <span class="beam-lock"><Icon name="lock" size={18} /></span>
+        </div>
+        <div class="node"><span><Icon name="tv" size={30} /></span><b>Your Mac</b><small>{site.minMacOS} or later</small></div>
+        <p class="beam-cap">Wi-Fi or Bluetooth LE · end-to-end encrypted</p>
+        <div class="nocloud"><Icon name="cloud-off" size={18} /> No relay server. No sign-in. No analytics.</div>
+      </div>
+      <div class="trio tight">
+        <div class="reveal"><Icon name="shield" size={22} /><h3 class="h3">Modern cryptography</h3><p class="muted">X25519 key agreement and ChaCha20-Poly1305 encryption, with the pairing code mixed into the first handshake.</p></div>
+        <div class="reveal" style="--d:80ms"><Icon name="sparkles" size={22} /><h3 class="h3">On-device intelligence</h3><p class="muted">Ask, Smart Clipboard and Organize Tiles use Apple Intelligence on your Mac. Requests never go to us.</p></div>
+        <div class="reveal" style="--d:160ms"><Icon name="lock" size={22} /><h3 class="h3">You hold the keys</h3><p class="muted">See every paired remote in Settings and remove any of them. Turn off new pairings entirely when you are done.</p></div>
+      </div>
+      <p class="center more-privacy reveal"><a href="/privacy">How {site.name} handles your data <Icon name="arrow-right" size={15} /></a></p>
+    </div>
+  </section>
+
+  <!-- ============ STEPS ============ -->
+  <section class="section steps-sec">
+    <div class="wrap center">
+      <span class="eyebrow reveal">Two minutes</span>
+      <h2 class="h2 reveal">Set up before the popcorn's done.</h2>
+    </div>
+    <ol class="wrap howto">
+      <li class="card reveal">
+        <span class="n">1</span>
+        <h3 class="h3">Install {site.name} on your Mac</h3>
+        <p class="muted">Open it and allow Bluetooth, Local Network and Accessibility, so your phone can find it and send keys.</p>
+        <div class="how-art"><span class="mini-tile" style="--a:#048ffe"></span><span class="mini-tile on" style="--a:#f80135"></span><span class="mini-tile" style="--a:#8936b4"></span></div>
+      </li>
+      <li class="card reveal" style="--d:90ms">
+        <span class="n">2</span>
+        <h3 class="h3">Get the free remote</h3>
+        <p class="muted">Install the remote on iPhone or Android. Your Mac appears on its own; no address to type.</p>
+        <div class="how-art"><span class="found"><Icon name="wifi" size={16} /> Living Room <em>Connect</em></span></div>
+      </li>
+      <li class="card reveal" style="--d:180ms">
+        <span class="n">3</span>
+        <h3 class="h3">Enter the 6-digit code</h3>
+        <p class="muted">Your Mac shows a code, you type it once, and the two are paired. From then on the remote reconnects by itself.</p>
+        <div class="how-art code"><b>4</b><b>8</b><b>2</b><b>9</b><b>1</b><b>6</b></div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ PRICING TEASER ============ -->
+  <section class="section">
+    <div class="wrap price-teaser card reveal">
+      <div>
+        <span class="eyebrow">Pricing</span>
+        <h2 class="h2">Pay once.<br />Own it.</h2>
+        <p class="lede">No subscription. The Mac app is a one-time purchase with a {pricing.trialDays}-day free trial, and the remote is free on every phone in the house.</p>
+        <div class="cta-row left">
+          <a class="btn btn-primary" href="/download">Start free trial</a>
+          <a class="btn btn-ghost" href="/pricing">Compare editions</a>
+        </div>
+      </div>
+      <div class="price-tag">
+        <span class="amount"><sup>{pricing.currency}</sup>{direct.price}</span>
+        <span class="once">one-time · every feature</span>
+        <ul>
+          {direct.features.slice(0, 5).map((f) => <li><Icon name="check" size={16} /> {f}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ TEASER ============ -->
+  <section class="section faq-teaser">
+    <div class="wrap narrow">
+      <div class="center">
+        <span class="eyebrow reveal">Questions</span>
+        <h2 class="h2 reveal">Good to know.</h2>
+      </div>
+      <div class="reveal"><FaqList items={topFaqs} /></div>
+      <p class="center more-privacy"><a href="/faq">Read the full FAQ <Icon name="arrow-right" size={15} /></a></p>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="final">
+    <div class="final-glow" aria-hidden="true"></div>
+    <div class="wrap center">
+      <h2 class="display reveal">Lean back.<br /><span class="grad">Your Mac's got this.</span></h2>
+      <div class="cta-row reveal">
+        <a class="btn btn-primary" href="/download"><Icon name="apple" size={18} /> Download for Mac</a>
+        <a class="btn btn-ghost" href="/download#remote"><Icon name="phone" size={18} /> Get the remote</a>
+      </div>
+      <p class="fine reveal">{site.minMacOS} or later · iPhone and Android</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Screenshot tabs
+  const tabs = [...document.querySelectorAll<HTMLElement>('[data-shot-tab]')];
+  const shots = [...document.querySelectorAll<HTMLElement>('[data-shot]')];
+  tabs.forEach((t) =>
+    t.addEventListener('click', () => {
+      tabs.forEach((x) => x.setAttribute('aria-selected', String(x === t)));
+      shots.forEach((s) => s.classList.toggle('on', s.dataset.shot === t.dataset.shotTab));
+    }),
+  );
+
+  // Per-app remote card: rotate through profiles
+  const profs = [...document.querySelectorAll<HTMLElement>('[data-prof-card]')];
+  const dots = [...document.querySelectorAll<HTMLElement>('[data-profile-dot]')];
+  let pi = 0;
+  if (profs.length && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setInterval(() => {
+      pi = (pi + 1) % profs.length;
+      profs.forEach((p, i) => p.classList.toggle('on', i === pi));
+      dots.forEach((d, i) => d.classList.toggle('on', i === pi));
+    }, 3200);
+  }
+
+  // Scenes card: run the tapped scene step by step
+  const scenesCard = document.querySelector<HTMLElement>('[data-scenes]');
+  if (scenesCard) {
+    const mini = scenesCard.querySelector<HTMLElement>('[data-mini]')!;
+    const idle = scenesCard.querySelector<HTMLElement>('[data-steps-idle]')!;
+    const lists = [...scenesCard.querySelectorAll<HTMLElement>('[data-steps]')];
+    let timers: number[] = [];
+    scenesCard.querySelectorAll<HTMLElement>('[data-scene]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        timers.forEach(clearTimeout);
+        timers = [];
+        scenesCard.querySelectorAll('[data-scene]').forEach((b) => b.classList.toggle('on', b === btn));
+        idle.hidden = true;
+        lists.forEach((l) => {
+          l.hidden = l.dataset.steps !== btn.dataset.scene;
+          l.querySelectorAll('li').forEach((li) => li.classList.remove('done'));
+        });
+        const list = lists.find((l) => l.dataset.steps === btn.dataset.scene)!;
+        [...list.children].forEach((li, i) => {
+          timers.push(window.setTimeout(() => li.classList.add('done'), 250 + i * 420));
+        });
+        timers.push(
+          window.setTimeout(() => {
+            mini.style.setProperty('--b', btn.dataset.b!);
+            mini.style.setProperty('--warm', btn.dataset.warm!);
+          }, 600),
+        );
+      });
+    });
+  }
+
+  // Ask panel: type a request, then show the actions it became
+  const ask = document.querySelector<HTMLElement>('[data-ask]');
+  if (ask) {
+    const textEl = ask.querySelector<HTMLElement>('[data-ask-text]')!;
+    const list = ask.querySelector<HTMLElement>('[data-ask-actions]')!;
+    const demos: { q: string; a: string[] }[] = [
+      { q: 'Put on Netflix and dim the screen', a: ['Open Netflix', 'Brightness to 35%'] },
+      { q: 'Sleep in 30 minutes', a: ['Sleep timer: 30 min, then sleep display'] },
+      { q: 'Movie night', a: ['Run scene “Movie Night”'] },
+      { q: 'Make a scene for game night', a: ['Draft scene “Game Night”', 'Review 4 steps, then Save'] },
+    ];
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    let running = false;
+    async function loop() {
+      if (running) return;
+      running = true;
+      for (let i = 0; ; i = (i + 1) % demos.length) {
+        const d = demos[i];
+        list.innerHTML = '';
+        textEl.textContent = '';
+        ask.classList.remove('done');
+        if (reduced) textEl.textContent = d.q;
+        else for (const ch of d.q) { textEl.textContent += ch; await wait(34 + Math.random() * 40); }
+        await wait(450);
+        ask.classList.add('done');
+        for (const a of d.a) {
+          const li = document.createElement('li');
+          li.textContent = a;
+          list.appendChild(li);
+          await wait(260);
+        }
+        await wait(reduced ? 6000 : 2600);
+      }
+    }
+    new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { o.disconnect(); loop(); } }, { threshold: 0.3 }).observe(ask);
+  }
+</script>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding-top: clamp(118px, 15vw, 176px); }
+  .announce {
+    display: inline-flex; align-items: center; gap: 9px; padding: 5px 14px 5px 5px; margin-bottom: 26px;
+    border-radius: 999px; border: 1px solid var(--line); background: var(--surface); backdrop-filter: blur(10px);
+    font-size: 0.86rem; color: #c9cdd8; transition: border-color 0.2s, background 0.2s;
+  }
+  .announce:hover { border-color: var(--line-2); background: var(--surface-2); }
+  .announce b { padding: 2px 9px; border-radius: 999px; background: linear-gradient(100deg, #7ea8ff, #a67bff); color: #06070b; font-size: 0.74rem; letter-spacing: 0.03em; }
+  .hero .lede { margin-top: 26px; }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+  .cta-row.left { justify-content: flex-start; }
+  .fine { margin-top: 18px; font-size: 0.86rem; color: var(--faint); }
+  .demo { margin-top: clamp(48px, 7vw, 84px); }
+  .try { margin-top: clamp(22px, 3vw, 34px); text-align: center; font-size: 0.9rem; color: var(--muted); display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.6); animation: pulse 2s infinite; margin-right: 4px; }
+  @keyframes pulse { to { box-shadow: 0 0 0 10px rgba(48, 209, 88, 0); } }
+  .try-mouse { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .try-touch { display: none; }
+  @media (hover: none) { .try-mouse { display: none; } .try-touch { display: inline; } }
+
+  /* ---------- facts ---------- */
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: clamp(64px, 9vw, 110px); border-radius: 28px; overflow: hidden; border: 1px solid var(--line); background: var(--line); }
+  .facts > div { background: var(--bg-2); padding: 30px 26px; display: grid; gap: 6px; }
+  .facts strong { font-size: clamp(2.4rem, 4.4vw, 3.6rem); line-height: 1; letter-spacing: -0.05em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; width: fit-content; }
+  .facts span { color: var(--muted); font-size: 0.95rem; line-height: 1.4; }
+  @media (max-width: 820px) { .facts { grid-template-columns: 1fr 1fr; } }
+
+  /* ---------- showcase ---------- */
+  .showcase { margin-top: clamp(40px, 6vw, 72px); }
+  .shot-tabs { display: flex; width: fit-content; margin: 0 auto 22px; padding: 4px; gap: 2px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); }
+  .shot-tabs button { padding: 8px 20px; border-radius: 999px; font-size: 0.92rem; font-weight: 580; color: var(--muted); transition: background 0.25s, color 0.25s; }
+  .shot-tabs button[aria-selected='true'] { background: #fff; color: #07080c; }
+  .shots { display: grid; }
+  .shots :global(img) { grid-area: 1 / 1; opacity: 0; transition: opacity 0.6s var(--ease), transform 0.8s var(--ease); transform: scale(1.015); }
+  .shots :global(img.on) { opacity: 1; transform: none; }
+  .caption { text-align: center; margin-top: 16px; font-size: 0.82rem; color: var(--faint); }
+
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); margin-top: clamp(48px, 7vw, 80px); }
+  .trio.tight { margin-top: 44px; }
+  .trio > div > :global(svg) { color: var(--accent); margin-bottom: 14px; }
+  .trio p { margin-top: 8px; font-size: 0.98rem; }
+  @media (max-width: 820px) { .trio { grid-template-columns: 1fr; } }
+
+  /* ---------- split sections ---------- */
+  .split { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 90px); align-items: center; }
+  .split.rev { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); }
+  .split.rev .copy { order: 2; }
+  .copy .lede { margin-top: 22px; }
+  .ticks { margin-top: 28px; display: grid; gap: 13px; }
+  .ticks li { display: flex; gap: 12px; color: #c6cad6; font-size: 1rem; line-height: 1.45; }
+  .ticks li :global(svg) { color: var(--accent); flex: none; margin-top: 2px; }
+  .ticks b { color: #fff; font-weight: 620; }
+  @media (max-width: 900px) { .split, .split.rev { grid-template-columns: 1fr; } .split.rev .copy { order: 0; } }
+
+  .phones { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); align-items: center; padding-block: 20px; }
+  .phones::before { content: ''; position: absolute; inset: 10% 5%; background: radial-gradient(closest-side, rgba(110, 120, 255, 0.4), transparent); filter: blur(50px); z-index: -1; }
+  .phones .phone { transition: transform 0.7s var(--ease); }
+  .p-left { transform: translateX(22%) rotate(-7deg) scale(0.88); }
+  .p-mid { z-index: 2; transform: scale(1.04); }
+  .p-right { transform: translateX(-22%) rotate(7deg) scale(0.88); }
+  .phones:hover .p-left { transform: translateX(8%) rotate(-9deg) scale(0.9); }
+  .phones:hover .p-right { transform: translateX(-8%) rotate(9deg) scale(0.9); }
+
+  /* ---------- bento ---------- */
+  .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 18px; margin-top: clamp(40px, 6vw, 72px); }
+  .bento .card { padding: 30px; display: flex; flex-direction: column; gap: 24px; transition: border-color 0.3s, transform 0.5s var(--ease), opacity 0.9s var(--ease), filter 0.9s var(--ease); }
+  .bento .card:hover { border-color: var(--line-2); }
+  .b-copy p { margin-top: 8px; font-size: 0.97rem; }
+  .b-profile { grid-column: span 7; }
+  .b-scenes { grid-column: span 5; grid-row: span 2; }
+  .b-np { grid-column: span 4; }
+  .b-switch { grid-column: span 3; }
+  .b-sleep { grid-column: span 4; }
+  .b-pad { grid-column: span 4; }
+  .b-more { grid-column: span 4; }
+  @media (max-width: 1000px) {
+    .b-profile, .b-scenes { grid-column: span 12; grid-row: auto; }
+    .b-np, .b-switch, .b-sleep, .b-pad, .b-more { grid-column: span 6; }
+  }
+  @media (max-width: 640px) { .bento .card { grid-column: span 12; padding: 24px; } }
+
+  .profile-demo { position: relative; display: grid; margin-top: auto; }
+  .profile { grid-area: 1 / 1; display: grid; gap: 16px; opacity: 0; transform: translateY(10px); transition: opacity 0.5s, transform 0.6s var(--ease); pointer-events: none; }
+  .profile.on { opacity: 1; transform: none; }
+  .p-app { display: flex; align-items: center; gap: 14px; }
+  .p-app img { width: 46px; height: 46px; }
+  .p-app img.fav { border-radius: 11px; }
+  .p-app b { display: block; font-size: 1.05rem; }
+  .p-app span { color: var(--muted); font-size: 0.9rem; }
+  .p-keys { display: flex; flex-wrap: wrap; gap: 8px; }
+  .p-keys span { padding: 10px 16px; border-radius: 999px; background: #1b1d27; border: 1px solid rgba(255, 255, 255, 0.06); font-size: 0.9rem; font-weight: 580; }
+  .p-keys span:first-child { background: #fff; color: #07080c; }
+  .p-dots { display: flex; gap: 6px; margin-top: 18px; grid-row: 2; }
+  .p-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgba(255, 255, 255, 0.2); transition: background 0.3s, width 0.3s; }
+  .p-dots i.on { background: #fff; width: 18px; border-radius: 99px; }
+
+  .scene-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+  .scene-btns button { display: inline-flex; align-items: center; gap: 10px; padding: 6px 16px 6px 6px; border-radius: 999px; background: #171922; border: 1px solid rgba(255, 255, 255, 0.07); font-weight: 600; font-size: 0.95rem; transition: transform 0.3s var(--spring), border-color 0.2s, background 0.2s; }
+  .scene-btns button:hover { transform: translateY(-2px); border-color: var(--line-2); }
+  .scene-btns button.on { background: color-mix(in srgb, var(--sc) 22%, #171922); border-color: color-mix(in srgb, var(--sc) 60%, transparent); }
+  .scene-btns span { width: 32px; height: 32px; border-radius: 50%; background: var(--sc); display: grid; place-items: center; }
+  .scene-stage { display: grid; gap: 18px; margin-top: auto; }
+  .mini-tv { --b: 1; --warm: 0; position: relative; border-radius: 12px; overflow: hidden; border: 4px solid #0b0c10; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 20px 40px -15px #000; }
+  .mini-tv :global(img) { width: 100%; filter: brightness(var(--b)); transition: filter 1.2s var(--ease); }
+  .mini-tv .warm { position: absolute; inset: 0; background: #ff8a1f; mix-blend-mode: multiply; opacity: calc(var(--warm) * 0.45); transition: opacity 1.2s; }
+  .steps { display: grid; gap: 8px; }
+  .steps[hidden] { display: none; }
+  .steps li { display: flex; align-items: center; gap: 10px; font-size: 0.93rem; color: var(--faint); transition: color 0.3s; }
+  .steps li :global(svg) { width: 20px; height: 20px; padding: 3px; border-radius: 50%; background: rgba(255, 255, 255, 0.07); color: transparent; transition: background 0.3s, color 0.3s, transform 0.4s var(--spring); flex: none; }
+  .steps li.done { color: #e8eaf0; }
+  .steps li.done :global(svg) { background: var(--good); color: #04130a; transform: scale(1.1); }
+  .steps-idle { color: var(--faint); font-size: 0.93rem; }
+
+  .np { background: #12141b; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 22px; padding: 18px; display: grid; grid-template-columns: 56px 1fr; gap: 12px 14px; align-items: center; }
+  .np-art { width: 56px; height: 56px; border-radius: 13px; display: grid; place-items: center; background: linear-gradient(135deg, #ff5f6d, #7c3aed 60%, #1e3a8a); box-shadow: 0 8px 24px -8px #7c3aed; }
+  .np-meta b { display: block; font-size: 1rem; }
+  .np-meta span { color: var(--muted); font-size: 0.85rem; }
+  .np-bar { grid-column: 1 / -1; height: 5px; border-radius: 99px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+  .np-bar i { display: block; height: 100%; background: #fff; border-radius: inherit; transform-origin: left; animation: np 26s linear infinite; }
+  @keyframes np { from { transform: scaleX(0.3); } to { transform: scaleX(1); } }
+  .np-time { grid-column: 1 / -1; display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--faint); margin-top: -6px; font-variant-numeric: tabular-nums; }
+  .np-ctl { grid-column: 1 / -1; display: flex; justify-content: center; align-items: center; gap: 26px; }
+  .np-play { width: 44px; height: 44px; border-radius: 50%; background: #fff; color: #07080c; display: grid; place-items: center; }
+
+  .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sw-grid > div { background: #15171f; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px; padding: 14px 8px; display: grid; justify-items: center; gap: 3px; text-align: center; min-height: 96px; align-content: center; }
+  .sw-grid img { width: 34px; height: 34px; margin-bottom: 4px; }
+  .sw-grid img.fav { border-radius: 8px; }
+  .sw-grid :global(svg) { margin-bottom: 4px; }
+  .sw-grid b { font-size: 0.8rem; }
+  .sw-grid span { font-size: 0.68rem; color: var(--faint); }
+
+  .ring { position: relative; width: 150px; height: 150px; margin: 4px auto; display: grid; place-items: center; }
+  /* The glow lives on the <svg>, not the circle: a filter on an SVG child is clipped to
+     that child's filter region, which showed up as a square box around the ring. */
+  .ring svg { position: absolute; inset: 0; transform: rotate(-90deg); overflow: visible; filter: drop-shadow(0 0 8px rgba(126, 168, 255, 0.6)); }
+  .ring circle { fill: none; stroke: rgba(255, 255, 255, 0.08); stroke-width: 7; }
+  .ring .prog { stroke: var(--accent); stroke-linecap: round; stroke-dasharray: 327; stroke-dashoffset: 40; animation: ring 30s linear infinite; }
+  @keyframes ring { to { stroke-dashoffset: 327; } }
+  .ring b { display: block; font-size: 1.7rem; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; text-align: center; }
+  .ring span { display: block; font-size: 0.75rem; color: var(--muted); text-align: center; }
+
+  .map { display: grid; gap: 0; margin: auto 0 0; }
+  .map div { display: flex; justify-content: space-between; padding: 9px 0; border-top: 1px solid var(--line); font-size: 0.92rem; }
+  .map dt { color: #fff; font-weight: 600; }
+  .map dd { margin: 0; color: var(--muted); }
+
+  .more-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .more-link { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; }
+  .more-link :global(svg) { transition: transform 0.3s var(--ease); }
+  .more-link:hover :global(svg) { transform: translateX(4px); }
+
+  /* ---------- ask ---------- */
+  .ask-sec { overflow: clip; }
+  .ask-glow { position: absolute; left: -10%; top: 10%; width: 60%; height: 80%; background: radial-gradient(closest-side, rgba(168, 85, 247, 0.28), transparent); filter: blur(60px); pointer-events: none; }
+  .req { margin-top: 26px; font-size: 0.85rem; color: var(--faint); max-width: 52ch; }
+  .ask-visual { display: grid; grid-template-columns: minmax(0, 1fr) 33%; gap: clamp(14px, 2vw, 24px); align-items: center; }
+  .ask-panel {
+    border-radius: 28px; padding: 24px; min-height: 340px;
+    background: linear-gradient(180deg, rgba(60, 62, 78, 0.55), rgba(26, 27, 36, 0.7));
+    border: 1px solid rgba(255, 255, 255, 0.14); backdrop-filter: blur(30px);
+    box-shadow: 0 50px 100px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
+  .ask-panel h4 { font-size: 1.6rem; letter-spacing: -0.03em; font-weight: 700; margin-bottom: 18px; }
+  .ask-field { display: flex; align-items: center; gap: 10px; background: #fff; color: #0a0b10; border-radius: 12px; padding: 12px 14px; font-weight: 560; min-height: 50px; font-size: 0.95rem; line-height: 1.3; }
+  .ask-field :global(svg) { color: #8b5cf6; flex: none; }
+  .caret { width: 2px; height: 1.2em; background: #3b82f6; margin-left: -8px; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .ask-actions { margin-top: 16px; display: grid; gap: 9px; }
+  .ask-actions :global(li) {
+    display: flex; align-items: center; gap: 11px; padding: 12px 15px; border-radius: 12px; background: rgba(255, 255, 255, 0.08); font-weight: 560; font-size: 0.97rem;
+    animation: rise 0.5s var(--ease) both;
+  }
+  .ask-actions :global(li)::before { content: '✓'; width: 22px; height: 22px; border-radius: 50%; background: var(--good); color: #04130a; display: grid; place-items: center; font-size: 0.75rem; font-weight: 800; flex: none; }
+  @keyframes rise { from { opacity: 0; transform: translateY(10px); } }
+  .ask-phone { width: 100%; }
+
+  /* ---------- privacy diagram ---------- */
+  .link-diagram { margin-top: clamp(40px, 6vw, 64px); padding: clamp(28px, 5vw, 56px); display: grid; grid-template-columns: auto 1fr auto; align-items: start; gap: 0 clamp(12px, 3vw, 36px); }
+  .node { display: grid; justify-items: center; gap: 4px; text-align: center; }
+  .node span { width: clamp(64px, 9vw, 96px); aspect-ratio: 1; border-radius: 28%; display: grid; place-items: center; margin-bottom: 8px; background: linear-gradient(145deg, #23263a, #0f1017); border: 1px solid var(--line-2); box-shadow: 0 20px 40px -15px rgba(100, 120, 255, 0.5); color: var(--accent); }
+  .node small { color: var(--muted); font-size: 0.8rem; }
+  .beam { position: relative; height: 2px; margin-top: clamp(32px, 4.5vw, 48px); background: linear-gradient(90deg, transparent, rgba(126, 168, 255, 0.7), rgba(166, 123, 255, 0.7), transparent); }
+  .beam i { position: absolute; top: -3px; width: 8px; height: 8px; border-radius: 50%; background: #fff; box-shadow: 0 0 14px 3px var(--accent); animation: travel 3.2s linear infinite; }
+  .beam i:nth-child(2) { animation-delay: -1.1s; animation-direction: reverse; }
+  .beam i:nth-child(3) { animation-delay: -2.1s; }
+  @keyframes travel { from { left: 0; opacity: 0; } 10%, 90% { opacity: 1; } to { left: calc(100% - 8px); opacity: 0; } }
+  .beam-lock { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 44px; height: 44px; border-radius: 50%; background: #0d0f17; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--good); }
+  .beam-cap { grid-column: 1 / -1; text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: 22px; }
+  .nocloud { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px; color: var(--muted); font-size: 0.92rem; }
+  .more-privacy { margin-top: 40px; }
+  .more-privacy a { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-weight: 600; }
+  @media (max-width: 560px) { .ask-visual { grid-template-columns: 1fr; } .ask-phone { display: none; } }
+
+  /* ---------- steps ---------- */
+  .howto { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: clamp(40px, 6vw, 64px); counter-reset: s; }
+  .howto li { padding: 30px; display: flex; flex-direction: column; gap: 10px; }
+  .howto .n { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 0.95rem; background: var(--grad); color: #06070b; margin-bottom: 8px; }
+  .how-art { margin-top: auto; padding-top: 22px; display: flex; gap: 10px; align-items: center; min-height: 86px; }
+  .mini-tile { flex: 1; aspect-ratio: 5 / 3; border-radius: 9px; background: linear-gradient(135deg, var(--a), color-mix(in srgb, var(--a) 60%, #000)); opacity: 0.6; }
+  .mini-tile.on { opacity: 1; transform: scale(1.12); box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4), 0 14px 30px -10px var(--a); }
+  .found { display: flex; align-items: center; gap: 10px; width: 100%; padding: 14px 16px; border-radius: 16px; background: #15171f; border: 1px solid rgba(255, 255, 255, 0.07); font-weight: 600; }
+  .found :global(svg) { color: var(--accent); }
+  .found em { margin-left: auto; font-style: normal; font-size: 0.82rem; background: #fff; color: #07080c; padding: 5px 12px; border-radius: 99px; }
+  .how-art.code { gap: 8px; }
+  .code b { flex: 1; aspect-ratio: 0.82; max-width: 52px; display: grid; place-items: center; border-radius: 12px; background: #15171f; border: 1px solid var(--line-2); font-size: 1.5rem; font-variant-numeric: tabular-nums; }
+  @media (max-width: 900px) { .howto { grid-template-columns: 1fr; } }
+
+  /* ---------- pricing teaser ---------- */
+  .price-teaser { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: clamp(28px, 5vw, 70px); padding: clamp(30px, 6vw, 72px); align-items: center; background: radial-gradient(90% 120% at 100% 0%, rgba(126, 110, 255, 0.22), transparent 60%), linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)); }
+  .price-teaser .lede { margin-top: 20px; }
+  .price-tag { background: rgba(5, 6, 10, 0.55); border: 1px solid var(--line-2); border-radius: 24px; padding: 30px; }
+  .amount { display: block; font-size: clamp(4rem, 8vw, 6rem); font-weight: 750; letter-spacing: -0.06em; line-height: 0.9; }
+  .amount sup { font-size: 0.4em; vertical-align: top; position: relative; top: 0.25em; margin-right: 3px; color: var(--muted); letter-spacing: 0; }
+  .once { display: block; color: var(--muted); font-size: 0.9rem; margin-top: 10px; }
+  .price-tag ul { margin-top: 22px; display: grid; gap: 10px; }
+  .price-tag li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.93rem; color: #d2d5df; }
+  .price-tag li :global(svg) { color: var(--good); flex: none; margin-top: 3px; }
+  @media (max-width: 860px) { .price-teaser { grid-template-columns: 1fr; } }
+
+  /* ---------- faq + final ---------- */
+  .narrow { max-width: 820px; }
+  .faq-teaser .center { margin-bottom: 40px; }
+  .final { position: relative; padding: clamp(110px, 15vw, 200px) 0; }
+  .final .wrap { position: relative; }
+  .final-glow { position: absolute; inset: 0; background: radial-gradient(46% 58% at 50% 52%, rgba(126, 140, 255, 0.34), rgba(166, 123, 255, 0.1) 55%, transparent 72%); pointer-events: none; }
+</style>

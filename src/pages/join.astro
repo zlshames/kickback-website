@@ -1,0 +1,65 @@
+---
+// A guest invite: https://getkickback.app/join#v=1&h=…&s=…
+//
+// With Kickback Companion installed, the phone opens this link in the app (a universal link on iOS, a
+// verified App Link on Android) and this page never loads. Without it, this page sends the guest
+// to the store, and its Open in Kickback Companion button hands the same invite to the app afterwards.
+//
+// The invite, its secret included, is in the URL's fragment. Browsers never send a fragment in a
+// request, and this page never sends it anywhere: the button is built in the page from
+// `location.hash`. No analytics, no third-party requests.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+---
+<Base title="Join as a Guest" description={`Open a ${site.name} invite in ${site.companion}.`} noindex>
+  <section class="page-hero join">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap center">
+      <span class="kicker"><Icon name="tv" size={16} /> Guest invite</span>
+      <h1 class="h2">You're invited to use the TV.</h1>
+      <p class="lede">Someone shared their {site.name} with you. Get {site.companion} on your phone, then come back and open the invite.</p>
+
+      <ol class="steps">
+        <li>
+          <strong>Get the app</strong>
+          <div class="btns">
+            <a class="btn btn-ghost store" href={site.links.iosRemote}><Icon name="apple" size={20} /><span><small>Download on the</small>App Store</span></a>
+            <a class="btn btn-ghost store" href={site.links.androidRemote}><Icon name="android" size={20} /><span><small>Get it on</small>Google Play</span></a>
+          </div>
+        </li>
+        <li>
+          <strong>Open the invite</strong>
+          <div class="btns">
+            <a class="btn btn-primary" id="open-invite" href="kickback://invite" hidden><Icon name="phone" size={18} /> Open in {site.companion}</a>
+          </div>
+          <p class="note" id="no-invite" hidden>This link is missing its invite. Scan the code on the TV again, or ask for a new link.</p>
+        </li>
+      </ol>
+
+      <p class="note">The code on the TV works for 10 minutes, and a shared link for an hour. If it has run out, scan the TV again: it shows a new one. As a guest you can open what's on Home, play and pause, and change the volume, until your access ends.</p>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Builds kickback://invite#… from this page's own fragment, which never leaves the phone.
+  const hash = location.hash;
+  const open = document.getElementById('open-invite') as HTMLAnchorElement | null;
+  const missing = document.getElementById('no-invite');
+  if (open && /(^|[#&])s=[A-Za-z0-9_-]{16,}/.test(hash) && /(^|[#&])i=/.test(hash)) {
+    open.href = 'kickback://invite' + hash;
+    open.hidden = false;
+  } else if (missing) {
+    missing.hidden = false;
+  }
+</script>
+
+<style>
+  .join { min-height: 80vh; padding: 140px 0 80px; }
+  .steps { list-style: none; counter-reset: step; padding: 0; margin: 40px auto 24px; max-width: 520px; text-align: left; display: grid; gap: 28px; }
+  .steps li { counter-increment: step; position: relative; padding-left: 46px; }
+  .steps li::before { content: counter(step); position: absolute; left: 0; top: -2px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: rgba(255, 255, 255, 0.12); }
+  .steps .btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+  .note { max-width: 560px; margin: 16px auto 0; }
+</style>

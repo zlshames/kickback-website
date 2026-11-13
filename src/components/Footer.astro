@@ -1,0 +1,43 @@
+---
+import { site } from '../data/site';
+import appIcon from '../assets/app-icon.png';
+import { Image } from 'astro:assets';
+const year = new Date().getFullYear();
+const cols = [
+  { title: 'Product', links: [['Features', '/features'], ['Pricing', '/pricing'], ['Download', '/download'], ['FAQ', '/faq']] },
+  { title: 'Remote', links: [['iPhone', '/download#remote'], ['Android', '/download#remote'], ['Setup guide', '/download#setup']] },
+  { title: 'Company', links: [['Privacy', '/privacy'], ['Contact', `mailto:${site.email}`]] },
+];
+---
+<footer class="footer">
+  <div class="wrap grid">
+    <div class="about">
+      <a class="brand" href="/"><Image src={appIcon} alt="" width={64} height={64} /> {site.name}</a>
+      <p class="muted">A living-room home screen for your Mac, driven from your phone.</p>
+    </div>
+    {cols.map((c) => (
+      <div>
+        <h4>{c.title}</h4>
+        <ul>{c.links.map(([label, href]) => <li><a href={href}>{label}</a></li>)}</ul>
+      </div>
+    ))}
+  </div>
+  <div class="wrap legal">
+    <span>© {year} {site.name}. Made for the couch.</span>
+    <span>Apple, Mac, macOS, iPhone and Apple TV are trademarks of Apple Inc. {site.name} is an independent product.</span>
+  </div>
+</footer>
+
+<style>
+  .footer { border-top: 1px solid var(--line); padding: 64px 0 40px; margin-top: 40px; background: linear-gradient(180deg, transparent, rgba(126, 168, 255, 0.035)); }
+  .grid { display: grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 40px; }
+  .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.15rem; letter-spacing: -0.03em; }
+  .brand img { width: 34px; height: 34px; }
+  .about p { margin-top: 14px; max-width: 30ch; font-size: 0.95rem; }
+  h4 { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); font-weight: 650; margin-bottom: 14px; }
+  li + li { margin-top: 9px; }
+  li a { color: #c3c7d3; font-size: 0.95rem; transition: color 0.2s; }
+  li a:hover { color: #fff; }
+  .legal { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.8rem; color: var(--faint); }
+  @media (max-width: 760px) { .grid { grid-template-columns: 1fr 1fr; } .about { grid-column: 1 / -1; } }
+</style>

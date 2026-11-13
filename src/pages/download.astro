@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { site, pricing } from '../data/site';
+import appIcon from '../assets/app-icon.png';
+import pRemote from '../assets/shots/p-remote.png';
+
+const steps = [
+  { t: 'Open Kickback on your Mac', d: 'Drag it to Applications and launch it. Allow Bluetooth and Local Network when macOS asks, so remotes can find it.' },
+  { t: 'Turn on Accessibility', d: 'In System Settings → Privacy & Security → Accessibility, switch Kickback on. The trackpad, keyboard and media keys need it.' },
+  { t: 'Install the remote', d: 'Get Kickback Companion on your iPhone or Android phone and open it. Your Mac appears in the list.' },
+  { t: 'Pair with the code', d: 'Tap your Mac, then type the 6-digit code it shows. That is the only time you will need it.' },
+  { t: 'Add your tiles', d: 'Use Add App, Add Link and Add Shortcut on the launcher, or the Apps tab on your phone.' },
+];
+const reqs = [
+  ['Mac', `${site.minMacOS} or later`],
+  ['Apple Intelligence features', 'macOS 26 or later on Apple silicon, with Apple Intelligence turned on'],
+  ['Remote', 'A recent iPhone or Android phone'],
+  ['Connection', 'The same Wi-Fi network, or Bluetooth LE'],
+];
+---
+<Base title="Download" description={`Download ${site.name} for Mac and the free remote for iPhone and Android.`}>
+  <section class="page-hero">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="wrap">
+      <Image class="icon reveal" src={appIcon} alt="" width={220} height={220} loading="eager" />
+      <h1 class="display reveal">Get <span class="grad">{site.name}.</span></h1>
+      <p class="lede reveal">One app for the Mac, one for your phone. Try every feature free for {pricing.trialDays} days.</p>
+    </div>
+  </section>
+
+  <section class="wrap cards">
+    <article class="card dl reveal">
+      <span class="kicker"><Icon name="tv" size={16} /> For your Mac</span>
+      <h2 class="h2 small">{site.name} for Mac</h2>
+      <p class="muted">Version {site.version} · {site.minMacOS} or later · Signed with Developer ID</p>
+      <div class="btns">
+        <a class="btn btn-primary" href={site.links.macDownload}><Icon name="download" size={18} /> Download (.dmg)</a>
+        <a class="btn btn-ghost" id="app-store" href={site.links.macAppStore}><Icon name="apple" size={18} /> Mac App Store</a>
+      </div>
+      <p class="note">The direct download has every feature. The App Store edition is sandboxed and leaves a few out. <a href="/pricing">Compare</a></p>
+    </article>
+
+    <article class="card dl remote reveal" id="remote" style="--d:90ms">
+      <div>
+        <span class="kicker"><Icon name="phone" size={16} /> For your phone</span>
+        <h2 class="h2 small">{site.companion}</h2>
+        <p class="muted">Free · iPhone and Android</p>
+        <div class="btns">
+          <a class="btn btn-ghost store" href={site.links.iosRemote}><Icon name="apple" size={20} /><span><small>Download on the</small>App Store</span></a>
+          <a class="btn btn-ghost store" href={site.links.androidRemote}><Icon name="android" size={20} /><span><small>Get it on</small>Google Play</span></a>
+        </div>
+      </div>
+      <div class="phone"><div class="screen"><Image src={pRemote} alt="The Kickback Companion app showing its swipe pad and buttons." widths={[360, 600]} sizes="200px" /></div></div>
+    </article>
+  </section>
+
+  <section class="section" id="setup">
+    <div class="wrap center">
+      <span class="eyebrow reveal">Setup</span>
+      <h2 class="h2 reveal">Five steps, about two minutes.</h2>
+    </div>
+    <ol class="wrap steps">
+      {steps.map((s, i) => (
+        <li class="reveal" style={`--d:${i * 60}ms`}>
+          <span class="n">{i + 1}</span>
+          <div><h3 class="h3">{s.t}</h3><p class="muted">{s.d}</p></div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="wrap reqs-wrap">
+    <div class="card reqs reveal">
+      <h2 class="h3">System requirements</h2>
+      <dl>
+        {reqs.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .icon { width: clamp(96px, 12vw, 132px); height: auto; margin: 0 auto 10px; filter: drop-shadow(0 30px 50px rgba(110, 120, 255, 0.5)); }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 16px; }
+  .dl { padding: clamp(28px, 4vw, 44px); display: flex; flex-direction: column; gap: 10px; }
+  .dl.remote { flex-direction: row; gap: 20px; padding-bottom: 0; overflow: hidden; scroll-margin-top: 110px; }
+  .dl.remote > div:first-child { flex: 1; display: flex; flex-direction: column; gap: 10px; padding-bottom: clamp(28px, 4vw, 44px); }
+  .dl.remote .phone { width: 34%; min-width: 120px; align-self: flex-end; margin-bottom: -22%; flex: none; }
+  .kicker { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 0.82rem; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; }
+  .h2.small { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .store { height: 56px; padding: 0 20px 0 16px; gap: 11px; text-align: left; }
+  .store span { display: grid; line-height: 1.1; font-size: 1.05rem; }
+  .store small { font-size: 0.66rem; font-weight: 500; color: var(--muted); }
+  .note { margin-top: auto; padding-top: 22px; font-size: 0.86rem; color: var(--faint); }
+  .note a { color: var(--accent); }
+  @media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .dl.remote .phone { display: none; } }
+
+  .steps { max-width: 760px; margin-top: clamp(36px, 5vw, 56px); display: grid; gap: 0; position: relative; }
+  .steps li { display: flex; gap: 22px; padding: 22px 0; position: relative; }
+  .steps li:not(:last-child)::before { content: ''; position: absolute; left: 19px; top: 62px; bottom: -22px; width: 1px; background: linear-gradient(var(--line-2), transparent); }
+  .n { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; background: var(--surface-2); border: 1px solid var(--line-2); color: var(--accent); }
+  .steps p { margin-top: 5px; }
+
+  .reqs-wrap { max-width: 860px; }
+  .reqs { padding: clamp(26px, 4vw, 40px); }
+  .reqs dl { margin: 18px 0 0; }
+  .reqs dl div { display: grid; grid-template-columns: 220px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); font-size: 0.97rem; }
+  .reqs dt { color: var(--muted); }
+  .reqs dd { margin: 0; }
+  @media (max-width: 600px) { .reqs dl div { grid-template-columns: 1fr; gap: 2px; } }
+</style>
